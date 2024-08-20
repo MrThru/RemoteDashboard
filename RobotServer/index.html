@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Robot Server -> Node Server</title>
+    </head>
+
+    <body>
+        <h1>Robot Server -> Node Server</h1>
+
+        <script src="/networktables/networktables.js"></script>
+        <script>
+            function getValue(keyValue) {
+                return NetworkTable.getValue("/Smartdashboard/" + keyValue);
+            }
+
+            const serverIP = "localhost";
+            const serverPort = 3000;
+
+            setInterval(function() {
+                fetch(`https://${serverIP}:${serverPort}/sendUserData`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({driverPower: 0})
+                }).then(response => response.json());
+            }, 1000);
+        </script>
+    </body>
+</html>
