@@ -11,18 +11,19 @@
             /* background-color: red; */
         }
         #drive_speed_bar_outline {
-            background-color: grey;
+            background-color: green;
             width: 5%;
             height: 80%;
             margin-left: 47.5%;
             margin-top: 5%;
         }
         #drive_speed_bar_percentage {
-            background-color: green;
+            background-color: grey;
             width: 100%;
             height: 50%;
             margin-bottom: 0px;
-            position: relative; 
+            position: relative;
+            transition: 0.1s;
         }
     </style>
 </head>
@@ -32,6 +33,21 @@
             <div id="drive_speed_bar_percentage"></div>
         </div>
     </div>
-    <script src="index.js"></script>
+    <script>
+        setInterval(async function() {
+            let data = await fetch('/getUserData', {
+                method: "POST",
+                body: ""
+            }).then(function(rawJson) {
+                return rawJson.json();
+            }).then(function(json) {
+                return json
+            });
+
+            console.log(data, (100 - (data.driverPower * 100)));
+            document.getElementById("drive_speed_bar_percentage").style.height = (100 - (data.driverPower * 100)) + "%"
+        }, 100);
+
+    </script>
 </body>
 </html>

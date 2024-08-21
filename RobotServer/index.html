@@ -16,14 +16,15 @@
             const serverPort = 3000;
 
             setInterval(function() {
-                fetch(`https://${serverIP}:${serverPort}/sendUserData`, {
+                fetch(`http://${serverIP}:${serverPort}/sendUserData`, {
+                    mode: "no-cors",
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({driverPower: 0})
+                    body: JSON.stringify({driverPower: 0.2})
                 }).then(response => response.json());
-            }, 1000);
+            }, 100);
         </script>
     </body>
 </html>
