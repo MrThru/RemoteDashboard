@@ -8,29 +8,37 @@
         #container {
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
             /* background-color: red; */
         }
-        #drive_speed_bar_outline {
+        .slider_outline {
             background-color: green;
             width: 5%;
             height: 80%;
-            margin-left: 47.5%;
+            /* margin-left: 47.5%; */
             margin-top: 5%;
+            margin: 5%;
         }
-        #drive_speed_bar_percentage {
+        .slide_bar {
             background-color: grey;
             width: 100%;
             height: 50%;
             margin-bottom: 0px;
-            position: relative;
+            /* position: relative; */
             transition: 0.1s;
         }
+
     </style>
 </head>
 <body>
     <div id="container">
-        <div id="drive_speed_bar_outline">
-            <div id="drive_speed_bar_percentage"></div>
+        <div id="drive_speed_bar_outline" class="slider_outline">
+            <div id="drive_speed_bar_percentage" class="slide_bar"></div>
+        </div>
+
+        <div id="motor_drive_speed_bar_outline" class="slider_outline" style="background-color: dodgerblue;">
+            <div id="motor_drive_speed_bar_percentage" class="slide_bar"></div>
         </div>
     </div>
     <script>
@@ -46,6 +54,10 @@
 
             console.log(data, (100 - (data.driverPower * 100)));
             document.getElementById("drive_speed_bar_percentage").style.height = Math.abs((100 - (data.driverPower * 100))) + "%"
+
+            document.getElementById("motor_drive_speed_bar_percentage").style.height = Math.abs((100 - (data.motorDrivePower * 100))) + "%"
+
+
         }, 100);
 
     </script>

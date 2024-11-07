@@ -26,7 +26,10 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({driverPower: getSDValue("Joystick Reading Value")})
+                    body: JSON.stringify({
+                        driverPower: getSDValue("Joystick Reading Value"),
+                        motorDrivePower: getSDValue("Drive Motor Power")
+                    })
                 }).then(response => response.json());
             }, 100);
         </script>
