@@ -8,21 +8,25 @@
 
         <script src="/networktables/networktables.js"></script>
         <script>
-            function getValue(keyValue) {
-                return NetworkTable.getValue("/Smartdashboard/" + keyValue);
+            function getSDValue(name) {
+                if(name == null) return null;
+                var SDDir = "/SmartDashboard/" + name;
+                let value = NetworkTables.getValue(SDDir)
+                return (value == undefined) ? 0 : value;
             }
 
             const serverIP = "localhost";
             const serverPort = 3000;
 
             setInterval(function() {
+		    console.log(getSDValue("Joystick Reading Value"))
                 fetch(`http://${serverIP}:${serverPort}/sendUserData`, {
                     mode: "no-cors",
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({driverPower: 0.2})
+                    body: JSON.stringify({driverPower: getSDValue("Joystick Reading Value")})
                 }).then(response => response.json());
             }, 100);
         </script>

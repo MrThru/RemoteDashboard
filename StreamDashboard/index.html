@@ -45,7 +45,7 @@
             });
 
             console.log(data, (100 - (data.driverPower * 100)));
-            document.getElementById("drive_speed_bar_percentage").style.height = (100 - (data.driverPower * 100)) + "%"
+            document.getElementById("drive_speed_bar_percentage").style.height = Math.abs((100 - (data.driverPower * 100))) + "%"
         }, 100);
 
     </script>
