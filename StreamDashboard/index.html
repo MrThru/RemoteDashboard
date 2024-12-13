@@ -41,24 +41,47 @@
             <div id="motor_drive_speed_bar_percentage" class="slide_bar"></div>
         </div>
     </div>
+    <script src="/networktables/networktables.js"></script>
+
     <script>
-        setInterval(async function() {
-            let data = await fetch('/getUserData', {
-                method: "POST",
-                body: ""
-            }).then(function(rawJson) {
-                return rawJson.json();
-            }).then(function(json) {
-                return json
-            });
 
-            console.log(data, (100 - (data.driverPower * 100)));
-            document.getElementById("drive_speed_bar_percentage").style.height = Math.abs((100 - (data.driverPower * 100))) + "%"
+        if(false) {
+            setInterval(async function() {
+                let data = await fetch('/getUserData', {
+                    method: "POST",
+                    body: ""
+                }).then(function(rawJson) {
+                    return rawJson.json();
+                }).then(function(json) {
+                    return json
+                });
 
-            document.getElementById("motor_drive_speed_bar_percentage").style.height = Math.abs((100 - (data.motorDrivePower * 100))) + "%"
+                console.log(data, (100 - (data.driverPower * 100)));
+                document.getElementById("drive_speed_bar_percentage").style.height = Math.abs((100 - (data.driverPower * 100))) + "%"
+
+                document.getElementById("motor_drive_speed_bar_percentage").style.height = Math.abs((100 - (data.motorDrivePower * 100))) + "%"
 
 
-        }, 100);
+            }, 100);
+        } else {
+            function getSDValue(name) {
+                if(name == null) return null;
+                var SDDir = "/SmartDashboard/" + name;
+                let value = NetworkTables.getValue(SDDir)
+                return (value == undefined) ? 0 : value;
+            }
+            
+            setInterval(async function() {
+                let drivePower = getSDValue("Joystick Reading Value");
+                let motorDrivePower = getSDValue("Drive Motor Power");
+
+                
+                document.getElementById("drive_speed_bar_percentage").style.height = Math.abs((100 - (driverPower * 100))) + "%"
+
+                document.getElementById("motor_drive_speed_bar_percentage").style.height = Math.abs((100 - (motorDrivePower * 100))) + "%"
+
+            }, 10);
+        } 
 
     </script>
 </body>
